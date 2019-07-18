@@ -11,7 +11,7 @@ def test_malicious_urls(url):
         }
     }
 
-    assert clean_draft_js(json_data) is json_data
+    clean_draft_js(json_data)
     assert json_data == {
         "entityMap": {
             "0": {"data": {"url": "#invalid"}, "type": "LINK", "mutability": "MUTABLE"}

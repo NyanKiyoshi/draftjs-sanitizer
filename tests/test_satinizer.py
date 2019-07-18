@@ -3,11 +3,6 @@ import pytest
 from draftjs_sanitizer import clean_draft_js
 
 
-def test_returns_same_object():
-    json_data = {}
-    assert clean_draft_js(json_data) is json_data
-
-
 @pytest.mark.parametrize(
     "json_data",
     (

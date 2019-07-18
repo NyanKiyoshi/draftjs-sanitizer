@@ -1,27 +1,25 @@
+from json import JSONEncoder
 from logging import Logger
 from typing import Dict, Iterable, Optional
 
 from urllib3.util import parse_url
 
-from .definitions import (
-    BLACKLISTED_CHARS,
-    BLACKLISTED_URL_SCHEMES,
-    ENTITIES_HAVING_URLS,
-)
+from .definitions import BLACKLISTED_URL_SCHEMES, ENTITIES_HAVING_URLS
+from .encoder import DraftJSSafeEncoder
 
 
 class DraftJSSanitizer:
     def __init__(
         self,
-        blacklisted_chars: Iterable = BLACKLISTED_CHARS,
         blacklisted_url_schemes: Iterable = BLACKLISTED_URL_SCHEMES,
         entities_having_url: Dict[str, Iterable] = ENTITIES_HAVING_URLS,
         logger: Optional[Logger] = None,
+        json_encoder: JSONEncoder = DraftJSSafeEncoder,
     ):
         """
-        :param blacklisted_chars:
-            The characters that should be encoded instead of being raw.
-            This is only useful for dumping/encoding.
+        :param json_encoder:
+            The json encoder that will sanitize sensible characters instead
+            of letting them raw. This is only useful for dumping/encoding.
 
         :param blacklisted_url_schemes:
             The URL schemes to blacklist.
@@ -36,7 +34,7 @@ class DraftJSSanitizer:
             A logger if you want to log invalid inputs.
             By default, nothing is logged.
         """
-        self.blacklisted_chars = blacklisted_chars
+        self.json_encoder = json_encoder
         self.blacklisted_url_schemes = blacklisted_url_schemes
         self.entities_having_url = entities_having_url
         self.logger = logger
