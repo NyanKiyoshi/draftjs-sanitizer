@@ -1,9 +1,9 @@
 import json
 
-from .encoder import DraftJSSafeEncoder
+from .encoder import SafeJSONEncoder
 from .sanitizer import DraftJSSanitizer
 
-__all__ = ["DraftJSSanitizer", "DraftJSSafeEncoder", "clean_draft_js", "to_string"]
+__all__ = ["DraftJSSanitizer", "SafeJSONEncoder", "clean_draft_js", "to_string"]
 
 
 def clean_draft_js(definitions: dict):
@@ -23,7 +23,7 @@ def to_string(definitions: dict, full_clean=False, **kwargs) -> str:
     :param full_clean: Whether all the checks should be ran instead of only checking for
         dangerous characters. Basically runs ``clean_draft_js`` before dumping.
     """
-    kwargs.setdefault("cls", DraftJSSafeEncoder)
+    kwargs.setdefault("cls", SafeJSONEncoder)
 
     if full_clean:
         definitions = definitions.copy()

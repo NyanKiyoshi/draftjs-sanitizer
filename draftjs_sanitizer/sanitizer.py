@@ -5,7 +5,7 @@ from typing import Dict, Iterable, Optional
 from urllib3.util import parse_url
 
 from .definitions import BLACKLISTED_URL_SCHEMES, ENTITIES_HAVING_URLS
-from .encoder import DraftJSSafeEncoder
+from .encoder import SafeJSONEncoder
 
 
 class DraftJSSanitizer:
@@ -14,7 +14,7 @@ class DraftJSSanitizer:
         blacklisted_url_schemes: Iterable = BLACKLISTED_URL_SCHEMES,
         entities_having_url: Dict[str, Iterable] = ENTITIES_HAVING_URLS,
         logger: Optional[Logger] = None,
-        json_encoder: JSONEncoder = DraftJSSafeEncoder,
+        json_encoder: JSONEncoder = SafeJSONEncoder,
     ):
         """
         :param json_encoder:

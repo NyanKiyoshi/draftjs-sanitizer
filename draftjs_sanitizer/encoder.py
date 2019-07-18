@@ -3,10 +3,10 @@ from json.encoder import ESCAPE_DCT, INFINITY, _make_iterencode, c_make_encoder
 
 from .definitions import ESCAPE_CHARS
 
-__all__ = ["DraftJSSafeEncoder"]
+__all__ = ["SafeJSONEncoder"]
 
 
-class DraftJSSafeEncoder(JSONEncoder):
+class SafeJSONEncoder(JSONEncoder):
     @property
     def escape_chars_pattern(self):
         return ESCAPE_CHARS
