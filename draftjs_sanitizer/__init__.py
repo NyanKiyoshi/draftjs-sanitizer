@@ -9,7 +9,7 @@ __all__ = ["DraftJSSanitizer", "SafeJSONEncoder", "clean_draft_js", "to_string"]
 def clean_draft_js(definitions: dict):
     """Sanitize a given DraftJS JSON definitions for saving or exporting."""
     cls = DraftJSSanitizer()
-    cls.sanitize(definitions)
+    return cls.sanitize(definitions)
 
 
 def to_string(definitions: dict, full_clean=False, **kwargs) -> str:

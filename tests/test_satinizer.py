@@ -1,6 +1,11 @@
 import pytest
 
-from draftjs_sanitizer import clean_draft_js
+from draftjs_sanitizer import DraftJSSanitizer, clean_draft_js
+
+
+def test_returns_same_object():
+    json_data = {}
+    assert clean_draft_js(json_data) is json_data
 
 
 @pytest.mark.parametrize(
@@ -23,3 +28,8 @@ def test_ignores_invalid_draftjs(json_data):
 
     clean_draft_js(json_data)
     assert json_data == base_data
+
+
+def test_dump():
+    data = {"hello<>": ""}
+    assert DraftJSSanitizer().dump(data) == r'{"hello\u003c\u003e": ""}'

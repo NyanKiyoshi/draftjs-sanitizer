@@ -1,3 +1,4 @@
+import json
 from json import JSONEncoder
 from logging import Logger
 from typing import Dict, Iterable, Optional
@@ -61,7 +62,9 @@ class DraftJSSanitizer:
         url = parse_url(value.strip())
 
         if url.scheme in self.blacklisted_url_schemes:
-            raise ValueError(f"Scheme: {url.scheme} is blacklisted")
+            raise ValueError(
+                "Scheme: {scheme} is blacklisted".format(scheme=url.scheme)
+            )
 
         return url.url
 
@@ -84,7 +87,11 @@ class DraftJSSanitizer:
             try:
                 new_url = self.check_url_is_allowed(entity_data[attr])
             except ValueError as exc:
-                self.warn(f"An invalid url was sent: {original_url} -- {exc}")
+                self.warn(
+                    "An invalid url was sent: {original_url} -- {exc}".format(
+                        original_url=original_url, exc=exc
+                    )
+                )
                 new_url = "#invalid"
 
             entity_data[attr] = new_url
@@ -110,5 +117,5 @@ class DraftJSSanitizer:
         self.clean_draft_js_entities(value)
         return value
 
-    def dump(self, value: dict) -> str:
-        raise NotImplementedError
+    def dump(self, value: dict, **kwargs) -> str:
+        return json.dumps(value, cls=self.json_encoder, **kwargs)
